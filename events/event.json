@@ -1,5 +1,5 @@
 {
-  "body": "{\"message\": \"hello world\"}",
+  "body": "{\r\n    \"post\": {\r\n        \"topic_title\": \"creating a transform\",\r\n        \"raw\": \"This is GREAT and very helpful, thank you\",\r\n        \"topic_id\": 517,\r\n        \"post_number\": 6,\r\n        \"reply_to_user\": {\r\n            \"username\": \"Philip-Ellis\"\r\n        }\r\n    }\r\n}",
   "resource": "/{proxy+}",
   "path": "/path/to/resource",
   "httpMethod": "POST",

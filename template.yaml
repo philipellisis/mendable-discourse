@@ -8,12 +8,18 @@ Description: >
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
-    Timeout: 3
+    Timeout: 300
 
 Resources:
   MendableDiscourseFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
+      Environment:
+        Variables:
+          MENDABLE_API_KEY: !Ref MendableApiKey
+          DISCOURSE_API_KEY: !Ref DiscourseApiKey
+          DISCOURSE_USERNAME: !Ref DiscourseUsername
+          DISCOURSE_URL: !Ref DiscourseUrl
       CodeUri: mendable-discourse/
       Handler: app.lambdaHandler
       Runtime: nodejs18.x
@@ -33,7 +39,19 @@ Resources:
         Sourcemap: true
         EntryPoints: 
         - app.ts
-
+Parameters:
+  MendableApiKey:
+    Type: String
+    Description: API key for Mendable
+  DiscourseApiKey:
+    Type: String
+    Description: API key for Discourse
+  DiscourseUsername:
+    Type: String
+    Description: Discourse username
+  DiscourseUrl:
+    Type: String
+    Description: Discourse URL
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
