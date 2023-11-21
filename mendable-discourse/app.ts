@@ -30,14 +30,14 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
         //console.log("chat response: " +  chatResponse.answer.text)
     
         let fullAnswer = addMessageContext(chatResponse);
-        let discourseClient = new DiscourseClient(process.env.DISCOURSE_API_KEY!, process.env.DISCOURSE_USERNAME!, 63)
+        let discourseClient = new DiscourseClient(process.env.DISCOURSE_API_KEY!, process.env.DISCOURSE_USERNAME!, process.env.DISCOURSE_URL!)
         let discoursePost = await discourseClient.createPost(post.post.topic_id, fullAnswer)
         console.log(`created post ${discoursePost.post.id}`)
     } else {
         console.log(`post ${post.post.post_number} in topic: ${post.post.topic_id}`)
         if ( post.post.raw.includes("@" + process.env.DISCOURSE_USERNAME!) || (post.post.reply_to_user && post.post.reply_to_user.username === process.env.DISCOURSE_USERNAME)) {
             console.log(`post ${post.post.post_number} in topic: ${post.post.topic_id} contains a mention of the bot`)
-            let discourseClient = new DiscourseClient(process.env.DISCOURSE_API_KEY!, process.env.DISCOURSE_USERNAME!, 63)
+            let discourseClient = new DiscourseClient(process.env.DISCOURSE_API_KEY!, process.env.DISCOURSE_USERNAME!, process.env.DISCOURSE_URL!)
             let discoursePosts = await discourseClient.getPosts(post.post.topic_id)
             // order discoursePosts by post_number ascending
             discoursePosts.sort((a, b) => (a.post_number > b.post_number) ? 1 : -1)

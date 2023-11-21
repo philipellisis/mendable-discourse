@@ -6,13 +6,13 @@ import { DiscoursePosts } from "./discourse-posts"
 export class DiscourseClient {
     private readonly token?: string
     private readonly user?: string
-    private readonly category?: number
+    private readonly url?: string
     private axiosInstance: AxiosWrapper
 
-    constructor(token: string, user: string, category: number, url: string) {
+    constructor(token: string, user: string, url: string) {
         this.user = user
         this.token = token
-        this.category = category
+        this.url = url
         this.axiosInstance = new AxiosWrapper(url)
     }
 
@@ -41,11 +41,8 @@ export class DiscourseClient {
     }
 
     async createPost(topicId: number, raw: string): Promise<any> {
+        console.log(`Creating post in topic ${topicId} with user ${this.user} and token ${this.token!.substring(0, 5)} with url ${this.url}`)
         const params: Params = {
-            unlist_topic: false,
-            is_warning: false,
-            archetype: "regular",
-            nested_post: true,
             topic_id: topicId!,
             raw: raw!
         }
